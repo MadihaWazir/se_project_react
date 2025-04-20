@@ -1,0 +1,51 @@
+.modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+  margin: 0;
+}
+
+.modal__content_type_image {
+  padding: 0;
+  max-width: 75vw;
+  max-height: 75vh;
+  width: 400px;
+  height: auto;
+}
+
+.modal__footer {
+  padding: 20px 32px 32px;
+  background-color: white;
+  font-family: "cabinet Grotesk", sans-serif;
+  border-radius: 0 0 20px 20px;
+  gap: 12px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  border-style: none;
+  padding: 0;
+
+  margin: 0;
+  height: 20px;
+  background: transparent;
+}
+
+.modal__caption {
+  margin: 0 0 12px 12px;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "cabinet Grotesk", sans-serif;
+  left: 32px;
+  bottom: 68px;
+}
+
+.modal__weather {
+  margin: 0 0 12px 12px;
+  font-size: 20px;
+  font-family: "cabinet Grotesk", sans-serif;
+  font-weight: 700;
+}
