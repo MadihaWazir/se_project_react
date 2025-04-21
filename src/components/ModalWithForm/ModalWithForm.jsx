@@ -1,7 +1,7 @@
 import "./ModalWithForm.css";
 import close from "../../assets/close.svg";
 
-function ModalWithForm({ childern, buttonText, title, activeModal, onClose }) {
+function ModalWithForm({ children, buttonText, title, activeModal, onClose }) {
   return (
     <div className={`modal ${activeModal && "modal__opened"}`}>
       <div className="modal__content">
@@ -10,7 +10,7 @@ function ModalWithForm({ childern, buttonText, title, activeModal, onClose }) {
           <img src={close} alt="close" />
         </button>
         <form className="modal__form">
-          {childern}
+          {children}
           <button type="submit" className="modal__submit">
             {buttonText}
           </button>

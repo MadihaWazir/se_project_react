@@ -71,3 +71,50 @@
   flex-direction: column;
   gap: 8px;
 }
+
+.modal__radio-input {
+  margin-right: 8px;
+}
+
+.modal__label {
+  max-width: 440px;
+  font-family: "cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0%;
+}
+
+.modal__radio-text {
+  color: #0000005d;
+}
+
+.modal__radio-input:checked + .modal__radio-text {
+  color: #000000;
+}
+
+.modal__submit {
+  background: rgba(0, 0, 0, 0.3);
+  width: 124px;
+  height: 36px;
+  border-radius: 4px;
+  gap: 8px;
+  padding-top: 8px;
+  padding-right: 16px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  border: none;
+  color: rgba(255, 255, 255, 1);
+  font-family: "Cabinet Grotesk", sans-serif;
+  cursor: pointer;
+}
+
+.modal__submit:hover {
+  background-color: #0000006d;
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.modal__submit:disabled {
+  background-color: #0000003d;
+}
