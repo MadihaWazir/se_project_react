@@ -1,6 +1,18 @@
-# React + Vite
+# WTWR (What to Wear?)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**About The Project**
+
+The concept of the app is straightforward: it sends a request to an API, which returns the daily weather forecast. We then gather and process this weather data, and based on the forecast, suggest appropriate clothing to the user.
+
+**Figma**
+
+- [Link to the project on Figma](https://www.figma.com/design/F03bTb81Pw8IDPj5Y9rc5i/Sprint-10-%7C-WTWR?node-id=311-433&p=f&t=HEurVuFcH5nYaCQH-0)
+
+## Deployment :
+
+This webpage is deployed to GitHub Pages.
+
+- Link : https://github.com/MadihaWazir/se_project_react
 
 Currently, two official plugins are available:
 
