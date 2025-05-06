@@ -49,3 +49,15 @@
   font-family: "cabinet Grotesk", sans-serif;
   font-weight: 700;
 }
+
+.modal__delete {
+  position: absolute;
+  right: 32px;
+  top: 518px;
+  color: #ff4d00;
+  font-size: 20px;
+  font-family: "cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  border: none;
+  background-color: transparent;
+}
