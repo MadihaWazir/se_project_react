@@ -1,7 +1,7 @@
 import "./ConfirmModal.css";
 
-function ConfirmModal({ isOpen, onClose, onConfirm, itemName }) {
-  if (!isOpen) return null;
+function ConfirmModal({ activeModal, onClose, onConfirm, itemName }) {
+  if (!activeModal) return null;
 
   return (
     <div className="modal modal_opened">

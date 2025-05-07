@@ -67,18 +67,18 @@ function App() {
         setClothingItems(updatedItems);
         setItemToDelete(null);
         setShowConfirmModal(false);
-        closeActiveModals();
+        closeActiveModal();
       })
       .catch(console.error);
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    const newId = Math.max(...clothingItems.map((item) => item._id)) + 1;
-    setClothingItems([
-      { name, link: imageUrl, weather, _id: newId },
-      ...clothingItems,
-    ]);
-    closeActiveModals();
+    addItem({ name, imageUrl, weather })
+      .then(() => {
+        setClothingItems([{ name, link: imageUrl, weather }, ...clothingItems]);
+        closeActiveModal();
+      })
+      .catch(console.error);
   };
 
   useEffect(() => {
