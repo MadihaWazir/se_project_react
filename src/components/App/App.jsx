@@ -78,7 +78,7 @@ function App() {
       { name, link: imageUrl, weather, _id: newId },
       ...clothingItems,
     ]);
-    closeActiveModal;
+    closeActiveModals();
   };
 
   useEffect(() => {
