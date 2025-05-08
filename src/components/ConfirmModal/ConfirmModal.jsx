@@ -1,6 +1,6 @@
 import "./ConfirmModal.css";
 
-function ConfirmModal({ activeModal, onClose, onConfirm, itemName }) {
+function ConfirmModal({ activeModal, onClose, onCardDelete }) {
   if (!activeModal) return null;
 
   return (
@@ -16,7 +16,10 @@ function ConfirmModal({ activeModal, onClose, onConfirm, itemName }) {
           irreversible.
         </p>
         <div className="modal__confirm-actions">
-          <button className="modal__delete-button-confirm" onClick={onConfirm}>
+          <button
+            className="modal__delete-button-confirm"
+            onClick={onCardDelete}
+          >
             Yes, delete item
           </button>
           <button className="modal__cancel-button" onClick={onClose}>

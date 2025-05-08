@@ -72,7 +72,7 @@ function App() {
       .catch(console.error);
   };
 
-  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
+  const onAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItem({ name, imageUrl, weather })
       .then(() => {
         setClothingItems([{ name, link: imageUrl, weather }, ...clothingItems]);
@@ -134,7 +134,7 @@ function App() {
         <AddItemModal
           activeModal={activeModal === "add-garment"}
           onClose={closeActiveModal}
-          onhandleAddItemModalSubmit={handleAddItemModalSubmit}
+          onAddItemModalSubmit={onAddItemModalSubmit}
         />
         <ItemModal
           activeModal={activeModal}
