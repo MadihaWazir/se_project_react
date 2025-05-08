@@ -123,7 +123,7 @@ function App() {
                   handleCardClick={handleCardClick}
                   onCardClick={handleCardClick}
                   clothingItems={clothingItems}
-                  onCardDelete={handleDeleteClick}
+                  onDelete={handleDeleteClick}
                 />
               }
             />
@@ -140,7 +140,7 @@ function App() {
           activeModal={activeModal}
           card={selectedCard}
           onClose={closeActiveModal}
-          onDeleteRequest={handleDeleteClick}
+          onDelete={handleDeleteClick}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>
