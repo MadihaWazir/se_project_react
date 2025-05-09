@@ -54,12 +54,13 @@ function App() {
   const handleDeleteClick = (card) => {
     setItemToDelete(card);
     setShowConfirmModal(true);
+    setActiveModal("delete-confirmatiom");
   };
 
   const handleConfirmDelete = () => {
     if (!itemToDelete) return;
 
-    removeItem(itemToDelete._id)
+    deleteItem(itemToDelete._id)
       .then(() => {
         const updatedItems = clothingItems.filter(
           (item) => item._id !== itemToDelete._id
@@ -75,7 +76,10 @@ function App() {
   const onAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItem({ name, imageUrl, weather })
       .then(() => {
-        setClothingItems([{ name, link: imageUrl, weather }, ...clothingItems]);
+        setClothingItems([
+          { name, imageUrl: imageUrl, weather },
+          ...clothingItems,
+        ]);
         closeActiveModal();
       })
       .catch(console.error);
@@ -141,6 +145,12 @@ function App() {
           card={selectedCard}
           onClose={closeActiveModal}
           onDelete={handleDeleteClick}
+        />
+        <ConfirmModal
+          onClose={closeActiveModal}
+          onCardDelete={handleConfirmDelete}
+          activeModal={activeModal}
+          isOpen={activeModal === "delete-confirmation"}
         />
       </div>
     </CurrentTemperatureUnitContext.Provider>

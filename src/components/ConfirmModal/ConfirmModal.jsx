@@ -12,7 +12,7 @@ function ConfirmModal({ activeModal, onClose, onCardDelete }) {
           type="button"
         ></button>
         <p className="modal__confirm-title">
-          Are you sure you want to delete "{itemName}"? This action is
+          Are you sure you want to delete this item? This action is
           irreversible.
         </p>
         <div className="modal__confirm-actions">
