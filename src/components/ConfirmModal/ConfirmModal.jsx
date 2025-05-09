@@ -1,4 +1,5 @@
 import "./ConfirmModal.css";
+import close from "../../assets/close-2.svg";
 
 function ConfirmModal({ isOpen, onClose, onCardDelete }) {
   return (
@@ -8,7 +9,9 @@ function ConfirmModal({ isOpen, onClose, onCardDelete }) {
           className="modal__close modal__close-preview"
           onClick={onClose}
           type="button"
-        ></button>
+        >
+          <img src={close} alt="close" />
+        </button>
         <p className="modal__confirm-title">
           Are you sure you want to delete this item? This action is
           irreversible.
