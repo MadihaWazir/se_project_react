@@ -2,7 +2,7 @@ import "./ConfirmModal.css";
 
 function ConfirmModal({ isOpen, onClose, onCardDelete }) {
   return (
-    <div className={'modal ${ isOpen && "modal_opened"}'}>
+    <div className={`modal ${isOpen && "modal_opened"}`}>
       <div className="modal__content modal__content_type_confirm">
         <button
           className="modal__close modal__close-preview"
