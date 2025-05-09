@@ -54,7 +54,7 @@ function App() {
   const handleDeleteClick = (card) => {
     setItemToDelete(card);
     setShowConfirmModal(true);
-    setActiveModal("delete-confirmatiom");
+    setActiveModal("delete-confirmation");
   };
 
   const handleConfirmDelete = () => {
@@ -149,7 +149,6 @@ function App() {
         <ConfirmModal
           onClose={closeActiveModal}
           onCardDelete={handleConfirmDelete}
-          activeModal={activeModal}
           isOpen={activeModal === "delete-confirmation"}
         />
       </div>
