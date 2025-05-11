@@ -75,11 +75,8 @@ function App() {
 
   const onAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     addItem({ name, imageUrl, weather })
-      .then(() => {
-        setClothingItems([
-          { name, imageUrl: imageUrl, weather },
-          ...clothingItems,
-        ]);
+      .then((addedCard) => {
+        setClothingItems([addedCard, ...clothingItems]);
         closeActiveModal();
       })
       .catch(console.error);

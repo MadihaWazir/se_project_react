@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function AddItemModal({
   onClose,
-  activeModal,
+  isOpen,
   onAddItemModalSubmit,
 }) {
   const [name, setName] = useState("");
@@ -35,7 +35,7 @@ export default function AddItemModal({
     <ModalWithForm
       title="New garment"
       buttonText="Add garment"
-      activeModal={activeModal}
+      isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
     >
