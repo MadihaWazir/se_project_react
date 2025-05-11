@@ -125,6 +125,7 @@ function App() {
               element={
                 <Profile
                   handleCardClick={handleCardClick}
+                  handleAddClick={handleAddClick}
                   onCardClick={handleCardClick}
                   clothingItems={clothingItems}
                   onDelete={handleDeleteClick}
@@ -136,12 +137,12 @@ function App() {
           <Footer />
         </div>
         <AddItemModal
-          activeModal={activeModal === "add-garment"}
+          isOpen={activeModal === "add-garment"}
           onClose={closeActiveModal}
           onAddItemModalSubmit={onAddItemModalSubmit}
         />
         <ItemModal
-          activeModal={activeModal}
+          isOpen={activeModal === "preview"}
           card={selectedCard}
           onClose={closeActiveModal}
           onDelete={handleDeleteClick}
