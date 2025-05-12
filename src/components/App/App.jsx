@@ -28,7 +28,6 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [itemToDelete, setItemToDelete] = useState(null);
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const handleToggleSwitchChange = () => {
     if (currentTemperatureUnit === "F") {
@@ -53,7 +52,7 @@ function App() {
 
   const handleDeleteClick = (card) => {
     setItemToDelete(card);
-    setShowConfirmModal(true);
+
     setActiveModal("delete-confirmation");
   };
 
@@ -67,7 +66,7 @@ function App() {
         );
         setClothingItems(updatedItems);
         setItemToDelete(null);
-        setShowConfirmModal(false);
+
         closeActiveModal();
       })
       .catch(console.error);
