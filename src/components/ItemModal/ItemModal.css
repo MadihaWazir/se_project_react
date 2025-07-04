@@ -62,3 +62,18 @@
   background-color: transparent;
   cursor: pointer;
 }
+
+.modal__footer_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 32px;
+  background-color: white;
+  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  font-weight: 700;
+}
+
+.modal__footer {
+  font-family: "Cabinet Grotesk", sans-serif;
+}

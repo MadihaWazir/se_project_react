@@ -48,3 +48,26 @@
   text-decoration: none;
   color: #000;
 }
+
+.header__auth-button {
+  background: none;
+  border: none;
+  color: #000;
+  font-weight: 700;
+  margin: 0;
+  cursor: pointer;
+  box-shadow: none;
+  outline: none;
+  border-radius: 0;
+  transition: none;
+}
+
+.header__auth-button_signup {
+  width: 67;
+  height: 24;
+}
+
+.header__auth-button_login {
+  width: 52;
+  height: 25;
+}

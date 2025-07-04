@@ -1,21 +1,42 @@
 const baseUrl = "http://localhost:3001";
 
-const request = (url, options) => {
-  return fetch(url, {
+function request(url, options) {
+  return fetch(url, options).then(handleServerResponse);
+}
+
+function getProtectedData(token) {
+  return fetch(`${baseUrl}/protected`, {
     headers: {
       "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
     },
-    ...options,
-  }).then(handleServerResponse);
-};
+  }).then(async (res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      const errorText = await res.text();
+      return Promise.reject(`Error: ${res.status} - ${errorText}`);
+    }
+  });
+}
 
-const handleServerResponse = (res) => {
-  return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+const handleServerResponse = async (res) => {
+  if (res.ok) {
+    return res.json();
+  } else {
+    const errorText = await res.text();
+    return Promise.reject(`Error: ${res.status} - ${errorText}`);
+  }
 };
 
 function getItems() {
-  return fetch(`${baseUrl}/items`).then((res) => {
-    return res.ok ? res.json() : Promise.reject(`Error: ${res.status}`);
+  return fetch(`${baseUrl}/items`).then(async (res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      const errorText = await res.text();
+      return Promise.reject(`Error: ${res.status} - ${errorText}`);
+    }
   });
 }
 
@@ -33,4 +54,26 @@ function deleteItem(_id) {
   });
 }
 
-export { getItems, addItem, deleteItem, handleServerResponse };
+function addCardLike(_id) {
+  return request(`${baseUrl}/items/${_id}/likes`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+function removeCardLike(_id) {
+  return request(`${baseUrl}/items/${_id}/likes`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+export {
+  getItems,
+  addItem,
+  deleteItem,
+  handleServerResponse,
+  getProtectedData,
+  addCardLike,
+  removeCardLike,
+};

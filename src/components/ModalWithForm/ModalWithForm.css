@@ -49,6 +49,16 @@
   width: 100%;
 }
 
+.modal__content--login {
+  max-height: 304px;
+  width: 496px;
+  height: 304px;
+}
+
+.modal__content--signup {
+  max-height: 456px;
+}
+
 .modal__form {
   display: flex;
   flex-direction: column;
@@ -123,6 +133,10 @@
   transform: scale(1.05);
 }
 
+.modal__submit:enabled {
+  background: #000;
+}
+
 .modal__submit:disabled {
   background-color: #0000003d;
 }
@@ -133,4 +147,16 @@
   max-height: 75vh;
   width: auto;
   height: auto;
+}
+
+.modal__switch-button {
+  background: none;
+  border: none;
+  color: #757575;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 0;
+  padding: 0;
+  transition: color 0.2s;
 }

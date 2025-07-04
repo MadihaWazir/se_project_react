@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import "./ModalWithForm.css";
 import close from "../../assets/close.svg";
 
@@ -9,24 +10,52 @@ function ModalWithForm({
   onClose,
   onSubmit,
   isSubmitDisabled,
+  contentClassName,
 }) {
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [isOpen, onClose]);
+
+  const handleOverlayClick = (e) => {
+    if (e.target.classList.contains("modal__overlay")) {
+      onClose();
+    }
+  };
+
   return (
     <div className={`modal ${isOpen && "modal_opened"}`}>
       <div className="modal__content">
         <h2 className="modal__title">{title}</h2>
-        <button onClick={onClose} type="button" className="modal__close">
-          <img src={close} alt="close" />
-        </button>
-        <form className="modal__form" onSubmit={onSubmit}>
-          {children}
-          <button
-            type="submit"
-            className="modal__submit"
-            disabled={isSubmitDisabled}
-          >
-            {buttonText}
+        <div className="modal__overlay" onClick={handleOverlayClick}></div>
+        <div className={contentClassName ? contentClassName : "modal__content"}>
+          <h2 className="modal__title">{title}</h2>
+          <button onClick={onClose} type="button" className="modal__close">
+            <img src={close}></img>
+            <img src={close} alt="Close" />
           </button>
-        </form>
+          <form className="modal__form" onSubmit={onSubmit}>
+            {children}
+            <div className="modal__actions">
+              <button type="submit" className="modal__submit">
+                {buttonText}
+              </button>
+              <button
+                type="submit"
+                className="modal__submit"
+                disabled={isSubmitDisabled}
+              >
+                {buttonText}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
