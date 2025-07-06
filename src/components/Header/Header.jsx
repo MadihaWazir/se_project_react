@@ -3,7 +3,7 @@ import logo from "../../assets/logo.svg";
 import avatar from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Header({
@@ -40,8 +40,8 @@ function Header({
           + Add clothes
         </button>
       )}
-      {currentUser && currrentUser.name ? (
-        <div classNmae="header__user">
+      {currentUser && currentUser.name ? (
+        <div className="header__user">
           {currentUser.avatar ? (
             <img
               src={currentUser.avatar}

@@ -43,6 +43,7 @@ function getItems() {
 function addItem({ name, imageUrl, weather }) {
   return request(`${baseUrl}/items`, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, imageUrl, weather }),
   });
 }

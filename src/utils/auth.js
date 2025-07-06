@@ -1,5 +1,11 @@
 const BASE_URL = "http://localhost:3001";
 
+const handleResponse = async (res) => {
+  if (res.ok) return res.json();
+  const errorText = await res.text();
+  return Promise.reject(`Error: ${res.status} - ${errorText}`);
+};
+
 export function signup({ name, avatar, email, password }) {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
@@ -7,14 +13,7 @@ export function signup({ name, avatar, email, password }) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ name, avatar, email, password }),
-  }).then(async (res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      const errorText = await res.text();
-      return Promise.reject(`Error: ${res.status} - ${errorText}`);
-    }
-  });
+  }).then(handleResponse);
 }
 
 export function signin({ email, password }) {
@@ -24,31 +23,16 @@ export function signin({ email, password }) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then(async (res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      const errorText = await res.text();
-      return Promise.reject(`Error: ${res.status} - ${errorText}`);
-    }
-  });
+  }).then(handleResponse);
 }
 
-export default function checkToken({ token }) {
+export function checkToken({ token }) {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-  }).then(async (res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      const errorText = await res.text();
-      return Promise.reject(`Error: ${res.status} - ${errorText}`);
-    }
-  });
+  }).then(handleResponse);
 }
 
 export const updateProfile = ({ name, avatar, token }) => {
@@ -59,12 +43,5 @@ export const updateProfile = ({ name, avatar, token }) => {
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name, avatar }),
-  }).then(async (res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      const errorText = await res.text();
-      return Promise.reject(`Error: ${res.status} - ${errorText}`);
-    }
-  });
+  }).then(handleResponse);
 };

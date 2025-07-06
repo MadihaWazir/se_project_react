@@ -1,27 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./EditProfileModal.css";
 
 function EditProfileModal({ isOpen, onClose, onEditProfile }) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const isSubmitDisabled = !name || !email;
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
+  useEffect(() => {
+    if (isOpen && currentUser) {
+      setName(currentUser.name);
+      setEmail(currentUser.email);
+    }
+  }, [isOpen, currentUser]);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const handleNameChange = (e) => setName(e.target.value);
+
+  const handleEmailChange = (e) => setEmail(e.target.value);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onEditProfile({ name, email });
-    setName("");
-    setEmail("");
+    //setName("");
+    //setEmail("");
   };
 
   return (

@@ -9,35 +9,31 @@ function Main({ weatherData, handleCardClick, clothingItems, onCardLike }) {
 
   return (
     <main>
-      <WeatherCard
-        temperature={weatherData.temp.F}
-        isDay={weatherData.isDay}
-        condition={weatherData.condition}
-      />
+      <WeatherCard weatherData={weatherData} />
 
       <section className="cards">
-        <p className="cards__text">
-          Today is {""}
-          {currentTemperatureUnit === "F"
-            ? `${weatherData.temp.F}°F`
-            : `${Math.round(weatherData.temp.C)}°C`}
-          {""}/ You may want to wear:
-        </p>
+        {weatherData && weatherData.temp ? (
+          <p className="cards__text">
+            Today is {""}
+            {currentTemperatureUnit === "F"
+              ? weatherData.temp.F
+              : weatherData.temp.C}
+            {""}
+            &deg; {currentTemperatureUnit}/ You may want to wear:
+          </p>
+        ) : null}
         <ul className="cards__list">
-          {clothingItems
-            .filter((item) => {
-              return item.weather === weatherData.type;
-            })
-            .map((item) => {
-              return (
-                <ItemCard
-                  key={item._id}
-                  item={item}
-                  onCardClick={handleCardClick}
-                  onCardLike={onCardLike}
-                />
-              );
-            })}
+          {clothingItems && clothingItems.length === 0 && (
+            <p>No clothing items found.</p>
+          )}
+          {clothingItems && weatherData && clothingItems.map((item) => (
+            <ItemCard
+              key={item._id}
+              item={item}
+              onCardClick={handleCardClick}
+              onCardLike={onCardLike}
+            />
+          ))}
         </ul>
       </section>
     </main>

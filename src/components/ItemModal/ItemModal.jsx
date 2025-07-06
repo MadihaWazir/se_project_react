@@ -1,10 +1,12 @@
 import "./ItemModal.css";
 import close from "../../assets/close-icon.svg";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function ItemModal({ isOpen, onClose, card, onDelete }) {
   const currentUser = useContext(CurrentUserContext);
+  if (!card) return null; // Defensive check
+
   const isOwn = card.owner === currentUser?._id;
 
   return (

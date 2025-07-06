@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./LoginModal.css";
 
@@ -9,29 +9,15 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSwitchToRegister }) => {
   const handleLogin = (e) => {
     e.preventDefault();
     onLogin({ email, password });
-    if (ValidityState()) {
-      onLogin({ email, password });
-    }
   };
 
   return (
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <ModalWithForm
         title="Log In"
-        buttonText="Log In"
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={handleLogin}
-        contentClass="modal__content modal__content--login"
-        actions={
-          <button
-            type="button"
-            className="modal__switch-button"
-            onClick={onSwitchToRegister}
-          >
-            or Register
-          </button>
-        }
       >
         <label htmlFor="login-email" className="modal__label">
           Email
@@ -57,6 +43,22 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSwitchToRegister }) => {
             required
           />
         </label>
+        <div className="modal__actions">
+          <button
+            type="submit"
+            className="modal__submit"
+            disabled={!email || !password}
+          >
+            Log in
+          </button>
+          <button
+            type="button"
+            className="modal__switch-button"
+            onClick={onSwitchToRegister}
+          >
+            or Register
+          </button>
+        </div>
       </ModalWithForm>
     </div>
   );

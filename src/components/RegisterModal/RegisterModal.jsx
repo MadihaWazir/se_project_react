@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./RegisterModal.css";
 
@@ -26,21 +26,12 @@ export default function RegisterModal({
     <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
       <ModalWithForm
         title="Sign Up"
-        buttonText="Register"
-        disabled={!email || !password || !name}
+        buttonText="Next"
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={handleSubmit}
+        isSubmitDisabled={!email || !password || !name}
         contentClassName="modal__content modal__content--signup"
-        actions={
-          <button
-            type="button"
-            className="modal__switch-button"
-            onClick={onSwitchToLogin}
-          >
-            or Log in
-          </button>
-        }
       >
         <label htmlFor="register-email" className="modal__label">
           Email
@@ -92,6 +83,22 @@ export default function RegisterModal({
             onChange={(e) => setAvatar(e.target.value)}
           />
         </label>
+        <div className="modal__actions">
+          <button
+            type="submit"
+            className="modal__submit"
+            disabled={!email || !password || !name}
+          >
+            Next
+          </button>
+          <button
+            type="button"
+            className="modal__switch-button"
+            onClick={onSwitchToLogin}
+          >
+            or Log in
+          </button>
+        </div>
       </ModalWithForm>
     </div>
   );

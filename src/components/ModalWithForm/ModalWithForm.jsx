@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./ModalWithForm.css";
 import close from "../../assets/close.svg";
 
@@ -30,32 +30,18 @@ function ModalWithForm({
   };
 
   return (
-    <div className={`modal ${isOpen && "modal_opened"}`}>
-      <div className="modal__content">
+    <div
+      className={`modal modal__overlay ${isOpen && "modal_opened"}`}
+      onClick={handleOverlayClick}
+    >
+      <div className={contentClassName || "modal__content"}>
         <h2 className="modal__title">{title}</h2>
-        <div className="modal__overlay" onClick={handleOverlayClick}></div>
-        <div className={contentClassName ? contentClassName : "modal__content"}>
-          <h2 className="modal__title">{title}</h2>
-          <button onClick={onClose} type="button" className="modal__close">
-            <img src={close}></img>
-            <img src={close} alt="Close" />
-          </button>
-          <form className="modal__form" onSubmit={onSubmit}>
-            {children}
-            <div className="modal__actions">
-              <button type="submit" className="modal__submit">
-                {buttonText}
-              </button>
-              <button
-                type="submit"
-                className="modal__submit"
-                disabled={isSubmitDisabled}
-              >
-                {buttonText}
-              </button>
-            </div>
-          </form>
-        </div>
+        <button onClick={onClose} type="button" className="modal__close">
+          <img src={close} alt="Close" />
+        </button>
+        <form className="modal__form" onSubmit={onSubmit}>
+          {children}
+        </form>
       </div>
     </div>
   );

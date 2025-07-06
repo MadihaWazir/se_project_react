@@ -10,7 +10,7 @@ import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import Footer from "../Footer/Footer";
 import LoginModal from "../LoginModal/LoginModal";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-
+import { checkToken } from "../../utils/auth";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
@@ -53,6 +53,8 @@ function App() {
     signin({ email, password })
       .then((user) => {
         setCurrentUser(user);
+        setIsLoggedIn(true);
+        navigate("/profile");
         closeActiveModal();
       })
       .catch(console.error);
@@ -130,9 +132,11 @@ function App() {
   };
 
   const handleEditProfileSubmit = ({ name, avatar }) => {
-    getCurrentUser()
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    checkToken({ token })
       .then((user) => {
-        return updateProfile({ name, avatar, token: user.token });
+        return updateProfile({ name, avatar, token });
       })
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
@@ -171,11 +175,12 @@ function App() {
       })
       .catch(console.error);
   }, []);
+  console.log(clothingItems);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      getCurrentUser(token)
+      checkToken({ token })
         .then((user) => {
           setCurrentUser(user);
           setIsLoggedIn(true);
@@ -186,6 +191,7 @@ function App() {
         });
     }
   }, []);
+  console.log(isLoggedIn);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -197,7 +203,8 @@ function App() {
             <Header
               handleAddClick={handleAddClick}
               weatherData={weatherData}
-              handleLogin={handleLogin}
+              isLoggedIn={isLoggedIn}
+              handleLoginModal={handleLogin}
               handleRegisterModal={handleRegisterModal}
               handleLogout={handleLogout}
               handleEditProfileModal={handleEditProfileModal}
@@ -234,6 +241,7 @@ function App() {
                         onCardClick={handleCardClick}
                         clothingItems={clothingItems}
                         onEditProfile={handleEditProfileModal}
+                        handleLogout={handleLogout}
                       />
                     </ProtectedRoute>
                   }
