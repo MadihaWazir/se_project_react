@@ -10,7 +10,7 @@ The concept of the app is straightforward: it sends a request to an API, which r
 
 **Backend Repository**
 
-- Link : se_project_express
+- Link : https://github.com/MadihaWazir/se_project_express
 
 ## Deployment :
 
