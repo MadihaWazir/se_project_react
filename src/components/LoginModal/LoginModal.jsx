@@ -9,6 +9,16 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSwitchToRegister }) => {
   const handleLogin = (e) => {
     e.preventDefault();
     onLogin({ email, password });
+    // Reset form after submission
+    setEmail("");
+    setPassword("");
+  };
+
+  // Reset form when modal closes
+  const handleClose = () => {
+    setEmail("");
+    setPassword("");
+    onClose();
   };
 
   return (
@@ -16,7 +26,7 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSwitchToRegister }) => {
       <ModalWithForm
         title="Log In"
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={handleClose}
         onSubmit={handleLogin}
       >
         <label htmlFor="login-email" className="modal__label">

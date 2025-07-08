@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { coordinates, APIkey } from "../../utils/constants";
+import {
+  coordinates,
+  APIkey,
+  defaultClothingItems,
+} from "../../utils/constants";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Profile from "../Profile/Profile";
@@ -9,7 +13,7 @@ import ItemModal from "../ItemModal/ItemModal";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi";
 import Footer from "../Footer/Footer";
 import LoginModal from "../LoginModal/LoginModal";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { checkToken } from "../../utils/auth";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
@@ -52,18 +56,29 @@ function App() {
   const handleLogin = ({ email, password }) => {
     signin({ email, password })
       .then((user) => {
+        localStorage.setItem("token", user.token);
         setCurrentUser(user);
         setIsLoggedIn(true);
         navigate("/profile");
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Login error:", error);
+      });
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
     localStorage.removeItem("token");
     navigate("/");
+  };
+
+  const handleRegisterModal = () => {
+    setActiveModal("register");
+  };
+
+  const handleLoginModal = () => {
+    setActiveModal("login");
   };
 
   const handleCardClick = (card) => {
@@ -114,14 +129,12 @@ function App() {
       .catch(console.error);
   };
 
-  const handleRegisterModal = () => {
-    setActiveModal("register");
-  };
-
   const handleRegistration = ({ name, avatar, email, password }) => {
     signup({ name, avatar, email, password })
       .then((user) => {
+        localStorage.setItem("token", user.token);
         setCurrentUser(user);
+        setIsLoggedIn(true);
         closeActiveModal();
       })
       .catch(console.error);
@@ -162,7 +175,9 @@ function App() {
   useEffect(() => {
     getWeather(coordinates, APIkey)
       .then((data) => {
+        console.log("Raw weather data:", data);
         const filteredData = filterWeatherData(data);
+        console.log("Filtered weather data:", filteredData);
         setWeatherData(filteredData);
       })
       .catch(console.error);
@@ -171,11 +186,20 @@ function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
+        console.log("Fetched clothing items:", data);
         setClothingItems(data);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error(
+          "Failed to fetch items from API, using default items:",
+          error
+        );
+        // Fallback to default items if API fails
+        setClothingItems(defaultClothingItems);
+      });
   }, []);
-  console.log(clothingItems);
+  console.log("Current clothingItems state:", clothingItems);
+  console.log("Current weatherData state:", weatherData);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -191,7 +215,6 @@ function App() {
         });
     }
   }, []);
-  console.log(isLoggedIn);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -204,7 +227,7 @@ function App() {
               handleAddClick={handleAddClick}
               weatherData={weatherData}
               isLoggedIn={isLoggedIn}
-              handleLoginModal={handleLogin}
+              handleLoginModal={handleLoginModal}
               handleRegisterModal={handleRegisterModal}
               handleLogout={handleLogout}
               handleEditProfileModal={handleEditProfileModal}
