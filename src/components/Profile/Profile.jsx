@@ -1,3 +1,4 @@
+import React from "react";
 import ClothesSection from "../ClothesSection/ClothesSection";
 import SideBar from "../SideBar/SideBar";
 import "./Profile.css";
@@ -8,22 +9,38 @@ function Profile({
   handleAddClick,
   onEditProfile,
   handleLogout,
+  onCardLike,
 }) {
   return (
-    <div className="profile">
+    <section className="profile">
       <div className="profile__container">
-        <section className="profile__sidebar">
+        <div className="profile__sidebar">
           <SideBar handleLogout={handleLogout} />
-        </section>
-        <section className="profile__clothing-item">
+        </div>
+        <div className="profile__clothes-section">
           <ClothesSection
             clothingItems={clothingItems}
             handleCardClick={handleCardClick}
             handleAddClick={handleAddClick}
+            onCardLike={onCardLike}
           />
-        </section>
+        </div>
       </div>
-    </div>
+      <button
+        className="profile__edit-button"
+        onClick={onEditProfile}
+        aria-label="Edit Profile"
+      >
+        Edit Profile
+      </button>
+      <button
+        className="profile__signout-button"
+        onClick={handleLogout}
+        aria-label="Sign Out"
+      >
+        Sign Out
+      </button>
+    </section>
   );
 }
 

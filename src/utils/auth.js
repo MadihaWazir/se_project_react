@@ -1,39 +1,34 @@
 const BASE_URL = "http://localhost:3001";
 
-const handleResponse = async (res) => {
-  if (res.ok) return res.json();
-  const errorText = await res.text();
-  return Promise.reject(`Error: ${res.status} - ${errorText}`);
-};
-
-export function signup({ name, avatar, email, password }) {
+export const signup = ({ name, avatar, email, password }) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ name, avatar, email, password }),
-  }).then(handleResponse);
-}
+  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
+};
 
-export function signin({ email, password }) {
+export const signin = ({ email, password }) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then(handleResponse);
-}
+  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
+};
 
-export function checkToken({ token }) {
+export const checkToken = ({ token }) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
+      "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-  }).then(handleResponse);
-}
+  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
+};
 
 export const updateProfile = ({ name, avatar, token }) => {
   return fetch(`${BASE_URL}/users/me`, {
@@ -43,5 +38,5 @@ export const updateProfile = ({ name, avatar, token }) => {
       authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name, avatar }),
-  }).then(handleResponse);
+  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 };

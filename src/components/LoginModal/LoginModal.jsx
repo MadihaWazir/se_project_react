@@ -5,29 +5,34 @@ import "./LoginModal.css";
 const LoginModal = ({ isOpen, onClose, onLogin, onSwitchToRegister }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin({ email, password });
-    // Reset form after submission
-    setEmail("");
-    setPassword("");
-  };
-
-  // Reset form when modal closes
-  const handleClose = () => {
-    setEmail("");
-    setPassword("");
-    onClose();
+    onLogin({ email, password }).catch(() =>
+      setError("Login failed. Please try again.")
+    );
   };
 
   return (
-    <div className={`modal ${isOpen ? "modal_opened" : ""}`}>
+    <div className={`modal${isOpen ? "modal_opened" : ""}`}>
       <ModalWithForm
         title="Log In"
+        buttonText="Log in"
+        disabled={!password}
         isOpen={isOpen}
-        onClose={handleClose}
-        onSubmit={handleLogin}
+        onClose={onClose}
+        onSubmit={handleSubmit}
+        contentClassName="modal__content modal__content--login"
+        actions={
+          <button
+            type="button"
+            className="modal__switch-button"
+            onClick={onSwitchToRegister}
+          >
+            or Register
+          </button>
+        }
       >
         <label htmlFor="login-email" className="modal__label">
           Email
@@ -52,23 +57,8 @@ const LoginModal = ({ isOpen, onClose, onLogin, onSwitchToRegister }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {error && <span className="modal__error">{error}</span>}
         </label>
-        <div className="modal__actions">
-          <button
-            type="submit"
-            className="modal__submit"
-            disabled={!email || !password}
-          >
-            Log in
-          </button>
-          <button
-            type="button"
-            className="modal__switch-button"
-            onClick={onSwitchToRegister}
-          >
-            or Register
-          </button>
-        </div>
       </ModalWithForm>
     </div>
   );

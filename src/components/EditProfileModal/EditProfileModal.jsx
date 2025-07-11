@@ -6,25 +6,19 @@ import "./EditProfileModal.css";
 function EditProfileModal({ isOpen, onClose, onEditProfile }) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const isSubmitDisabled = !name || !email;
+  const [avatar, setAvatar] = useState("");
+  const isSubmitDisabled = !name;
 
   useEffect(() => {
     if (isOpen && currentUser) {
-      setName(currentUser.name);
-      setEmail(currentUser.email);
+      setName(currentUser.name || "");
+      setAvatar(currentUser.avatar || "");
     }
   }, [isOpen, currentUser]);
 
-  const handleNameChange = (e) => setName(e.target.value);
-
-  const handleEmailChange = (e) => setEmail(e.target.value);
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    onEditProfile({ name, email });
-    //setName("");
-    //setEmail("");
+    onEditProfile({ name, avatar });
   };
 
   return (
@@ -36,30 +30,27 @@ function EditProfileModal({ isOpen, onClose, onEditProfile }) {
       onSubmit={handleSubmit}
       isSubmitDisabled={isSubmitDisabled}
     >
-      <label htmlFor="name" className="modal__label">
+      <label className="modal__label">
         Name
         <input
           type="text"
           className="modal__input"
           id="profile-name"
           placeholder="Name"
-          onChange={handleNameChange}
+          onChange={(e) => setName(e.target.value)}
           value={name}
-          minLength="1"
-          maxLength="30"
           required
         />
       </label>
-      <label htmlFor="email" className="modal__label">
-        Email
+      <label className="modal__label">
+        Avatar URL
         <input
-          type="email"
+          type="url"
           className="modal__input"
-          id="email"
-          placeholder="Email"
-          onChange={handleEmailChange}
-          value={email}
-          required
+          id="profile-avatar"
+          placeholder="Avatar URL"
+          onChange={(e) => setAvatar(e.target.value)}
+          value={avatar}
         />
       </label>
     </ModalWithForm>

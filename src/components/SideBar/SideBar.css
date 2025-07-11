@@ -1,12 +1,10 @@
 .sidebar {
-  display: flex;
-  gap: 16px;
-  margin: 0 116px 0 0;
-  width: max-content;
+  width: 229px;
+  background-color: #f3f3f3;
+  padding: 0;
 }
 
 .sidebar__username {
-  width: auto;
   font-family: "Cabinet Grotesk", sans-serif;
   font-size: 20px;
   line-height: 25px;

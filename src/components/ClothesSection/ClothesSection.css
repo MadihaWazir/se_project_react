@@ -8,6 +8,8 @@
 
 .clothes-section__container {
   display: flex;
+  margin-bottom: 20px;
+  padding-top: 16px;
   gap: 20px;
 }
 
@@ -15,13 +17,18 @@
   font-family: "cabinet Grotesk", sans-serif;
   font-weight: 700;
   font-size: 20px;
+  line-height: 25px;
+  margin: 0;
 }
 
 .clothes-section__button {
-  border: none;
-  background-color: transparent;
-  font-family: "cabinet Grotesk", sans-serif;
+  padding: 0;
+  font-family: Cabinet Grotesk;
   font-weight: 700;
   font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  border-style: none;
+  color: rgba(0, 0, 0, 0.6);
   cursor: pointer;
 }

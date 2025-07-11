@@ -1,6 +1,7 @@
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useState } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 
 export default function AddItemModal({
   onClose,
@@ -31,6 +32,14 @@ export default function AddItemModal({
     setImageUrl("");
     setWeather("");
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      setName("");
+      setImageUrl("");
+      setWeather("");
+    }
+  }, [isOpen]);
 
   return (
     <ModalWithForm
@@ -69,7 +78,7 @@ export default function AddItemModal({
       </label>
       <fieldset className="modal__radio-buttons">
         <legend className="modal__legend">Select the weather type:</legend>
-        <label htmlFor="hot" className="modal__label modal__label_type_radio">
+        <div className="modal__radio-button">
           <input
             id="hot"
             type="radio"
@@ -78,10 +87,12 @@ export default function AddItemModal({
             value="hot"
             onChange={handleWeatherChange}
             checked={weather === "hot"}
-          />{" "}
-          Hot
-        </label>
-        <label htmlFor="warm" className="modal__label modal__label_type_radio">
+          />
+          <label className="modal__radio-label" htmlFor="hot">
+            Hot
+          </label>
+        </div>
+        <div className="modal__radio-button">
           <input
             id="warm"
             type="radio"
@@ -90,10 +101,12 @@ export default function AddItemModal({
             value="warm"
             onChange={handleWeatherChange}
             checked={weather === "warm"}
-          />{" "}
-          Warm
-        </label>
-        <label htmlFor="cold" className="modal__label modal__label_type_radio">
+          />
+          <label className="modal__radio-label" htmlFor="warm">
+            Warm
+          </label>
+        </div>
+        <div className="modal__radio-button">
           <input
             id="cold"
             type="radio"
@@ -102,9 +115,11 @@ export default function AddItemModal({
             value="cold"
             onChange={handleWeatherChange}
             checked={weather === "cold"}
-          />{" "}
-          Cold
-        </label>
+          />
+          <label className="modal__radio-label" htmlFor="cold">
+            Cold
+          </label>
+        </div>
       </fieldset>
     </ModalWithForm>
   );

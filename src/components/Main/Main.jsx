@@ -1,16 +1,18 @@
 import "./Main.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function Main({ weatherData, handleCardClick, clothingItems, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
-
   // Debug logs
-  console.log("Main - clothingItems:", clothingItems);
-  console.log("Main - weatherData:", weatherData);
-  console.log("Main - weatherData.type:", weatherData?.type);
+  console.log("All clothing items:", clothingItems);
+  console.log("current weather type:", weatherData.type);
+  console.log(
+    "Filtered items:",
+    clothingItems.filter((item) => item.weather === weatherData.type)
+  );
 
   return (
     <main>

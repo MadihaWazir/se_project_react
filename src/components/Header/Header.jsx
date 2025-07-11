@@ -1,9 +1,8 @@
 import "./Header.css";
 import logo from "../../assets/logo.svg";
-import avatar from "../../assets/avatar.svg";
 import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function Header({
@@ -12,6 +11,7 @@ function Header({
   isLoggedIn,
   handleLoginModal,
   handleRegisterModal,
+  handleLogout,
 }) {
   const currentUser = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
@@ -21,41 +21,39 @@ function Header({
 
   return (
     <header className="header">
+      <Link to="/" className="header__container">
+        <img src={logo} alt="WTWR Logo" className="header__logo" />
+      </Link>
+      <p className="header__date-and-location">
+        {currentDate}, {weatherData.city}
+      </p>
       <div className="header__container">
-        <Link to="/">
-          <img src={logo} alt="WTWR logo" className="header__logo" />
-        </Link>
-
-        <p className="header__date-and-location">
-          {currentDate}, {weatherData.city}{" "}
-        </p>
+        <ToggleSwitch />
       </div>
-      <ToggleSwitch />
-      {isLoggedIn && (
-        <button
-          onClick={handleAddClick}
-          type="button"
-          className="header__add-clothes-btn"
-        >
-          + Add clothes
-        </button>
-      )}
-      {currentUser && currentUser.name ? (
+      {currentUser?.name ? (
         <div className="header__user">
-          <Link to="/profile" className="header__profile-link">
-            {currentUser.avatar ? (
-              <img
-                src={currentUser.avatar}
-                alt={currentUser.name}
-                className="header__avatar"
-              />
-            ) : (
-              <div className="header__avatar-placeholder">
-                {currentUser.name.charAt(0).toUpperCase()}
-              </div>
-            )}
-            <span>{currentUser.name}</span>
-          </Link>
+          {currentUser.avatar ? (
+            <img
+              src={currentUser.avatar}
+              alt={currentUser.name}
+              className="header__avatar"
+            />
+          ) : (
+            <div className="header__avatar-placeholder">
+              {currentUser.name.charAt(0).toUpperCase()}
+            </div>
+          )}
+          <span>{currentUser.name}</span>
+          <link to="/profile" className="header__profile-link">
+            Profile
+          </link>
+          <button
+            className="button header__auth-button header__auth-button_logout"
+            onClick={handleLogout}
+            aria-label="Sign out"
+          >
+            Sign out
+          </button>
         </div>
       ) : (
         <div>

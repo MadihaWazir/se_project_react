@@ -1,73 +1,70 @@
 const baseUrl = "http://localhost:3001";
 
-function request(url, options) {
-  return fetch(url, options).then(handleServerResponse);
-}
-
 function getProtectedData(token) {
-  return fetch(`${baseUrl}/protected`, {
+  return fetch(`${baseUrl}/protected-endpoint`, {
     headers: {
       "Content-Type": "application/json",
       authorization: `Bearer ${token}`,
     },
-  }).then(async (res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      const errorText = await res.text();
-      return Promise.reject(`Error: ${res.status} - ${errorText}`);
-    }
-  });
+  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 }
 
-const handleServerResponse = async (res) => {
+const handleServerResponse = (res) => {
   if (res.ok) {
     return res.json();
-  } else {
-    const errorText = await res.text();
-    return Promise.reject(`Error: ${res.status} - ${errorText}`);
   }
+  return Promise.reject(new Error(`Error: ${res.status}`));
 };
 
-function getItems() {
-  return fetch(`${baseUrl}/items`).then(async (res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      const errorText = await res.text();
-      return Promise.reject(`Error: ${res.status} - ${errorText}`);
-    }
-  });
-}
+const getItems = (id, token) => {
+  return fetch(`${baseUrl}/items`, {
+    method: "GET",
+  }).then(handleServerResponse);
+};
 
-function addItem({ name, imageUrl, weather }) {
-  return request(`${baseUrl}/items`, {
+const addItem = (inputData = {}, token) => {
+  return fetch(`${baseUrl}/items`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, imageUrl, weather }),
-  });
-}
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      name: inputData.name,
+      imageUrl: inputData.imageUrl,
+      weather: inputData.weather,
+    }),
+  }).then(handleServerResponse);
+};
 
-function deleteItem(_id) {
-  return request(`${baseUrl}/items/${_id}`, {
+const deleteItem = (id, token) => {
+  return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-  });
-}
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  }).then(handleServerResponse);
+};
 
-function addCardLike(_id) {
-  return request(`${baseUrl}/items/${_id}/likes`, {
+const addCardLike = (id, token) => {
+  return fetch(`${baseUrl}/items/${id}/likes`, {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-  });
-}
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  }).then(handleServerResponse);
+};
 
-function removeCardLike(_id) {
-  return request(`${baseUrl}/items/${_id}/likes`, {
+const removeCardLike = (id, token) => {
+  return fetch(`${baseUrl}/items/${id}/likes`, {
     method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-  });
-}
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
+  }).then(handleServerResponse);
+};
 
 export {
   getItems,
