@@ -225,6 +225,8 @@ function App() {
               isLoggedIn={isLoggedIn}
               handleLoginModal={() => setActiveModal("login")}
               handleRegisterModal={() => setActiveModal("register")}
+              handleLogout={handleLogout}
+              currentUser={currentUser}
             />
 
             {isSidebarOpen ? <SideBar handleLogout={handleLogout} /> : null}

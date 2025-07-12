@@ -7,6 +7,10 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 function Main({ weatherData, handleCardClick, clothingItems, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
+  const filteredItems = clothingItems.filter(
+    (item) => item.weather === weatherData.type
+  );
+
   // Debug logs
   console.log("All clothing items:", clothingItems);
   console.log("current weather type:", weatherData.type);
@@ -29,14 +33,20 @@ function Main({ weatherData, handleCardClick, clothingItems, onCardLike }) {
         </p>
 
         <ul className="cards__list">
-          {clothingItems.map((item) => (
-            <ItemCard
-              key={item._id}
-              item={item}
-              onCardClick={handleCardClick}
-              onCardLike={onCardLike}
-            />
-          ))}
+          {filteredItems.length > 0 ? (
+            filteredItems.map((item) => (
+              <ItemCard
+                key={item._id}
+                item={item}
+                onCardClick={handleCardClick}
+                onCardLike={onCardLike}
+              />
+            ))
+          ) : (
+            <li className="cards__no-items">
+              No items found for {weatherData.type} weather
+            </li>
+          )}
         </ul>
       </section>
     </main>
