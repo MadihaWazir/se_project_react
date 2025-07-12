@@ -13,7 +13,6 @@ function Header({
   handleLoginModal,
   handleRegisterModal,
   handleLogout,
-  currentUser,
 }) {
   const currentUser = useContext(CurrentUserContext);
   const currentDate = new Date().toLocaleString("default", {
@@ -46,9 +45,9 @@ function Header({
             </div>
           )}
           <span>{currentUser.name}</span>
-          <link to="/profile" className="header__profile-link">
+          <Link to="/profile" className="header__profile-link">
             {currentUser?.name || "Profile"}
-          </link>
+          </Link>
           <button
             className="button header__auth-button header__auth-button_logout"
             onClick={handleLogout}

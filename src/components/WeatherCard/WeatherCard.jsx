@@ -6,8 +6,20 @@ import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnit
 function WeatherCard({ weatherData }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
+  console.log("=== WEATHERCARD DEBUG ===");
+  console.log("weatherData received:", weatherData);
+  console.log("weatherData.temp:", weatherData?.temp);
+  console.log("currentTemperatureUnit:", currentTemperatureUnit);
+
   if (!weatherData || !weatherData.temp) {
-    return null;
+    return (
+      <section className="weather-card">
+        <p className="weather-card__temp">Loading weather...</p>
+        <div className="weather-card__placeholder">
+          <p>Getting weather data...</p>
+        </div>
+      </section>
+    );
   }
 
   const filteredOptions = weatherOptions.filter((option) => {
@@ -23,6 +35,9 @@ function WeatherCard({ weatherData }) {
   } else {
     weatherOption = filteredOptions[0];
   }
+
+  const tempF = Math.round(weatherData.temp.F);
+  const tempC = Math.round(weatherData.temp.C);
 
   return (
     <section className="weather-card">

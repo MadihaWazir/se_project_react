@@ -176,15 +176,30 @@ function App() {
   };
 
   useEffect(() => {
+    console.log("=== WEATHER FETCH DEBUG ===");
+    console.log("Coordinates:", coordinates);
+    console.log("API Key:", APIkey);
+
     getWeather(coordinates, APIkey)
       .then((data) => {
+        console.log("Raw weather API response:", data);
         const filteredData = filterWeatherData(data);
+        console.log("Filtered weather data:", filteredData);
         setWeatherData(filteredData);
       })
       .catch((err) => {
-        console.error(err);
+        console.error("Weather fetch failed:", err);
+        const fallbackWeather = {
+          city: "Test City",
+          temp: { F: 72, C: 22 },
+          type: "warm",
+          condition: "clear",
+          isDay: true,
+        };
+        console.log("Setting fallback weather data:", fallbackWeather);
+        setWeatherData(fallbackWeather);
       });
-  }, []);
+  }, [coordinates, APIkey]);
 
   useEffect(() => {
     getItems()
