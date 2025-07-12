@@ -1,11 +1,12 @@
 import "./Main.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import CurrentTemperatureUnitContext from "../../contexts/CurrentTemperatureUnitContext";
 
 function Main({ weatherData, handleCardClick, clothingItems, onCardLike }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
+
   // Debug logs
   console.log("All clothing items:", clothingItems);
   console.log("current weather type:", weatherData.type);
@@ -16,11 +17,7 @@ function Main({ weatherData, handleCardClick, clothingItems, onCardLike }) {
 
   return (
     <main>
-      <WeatherCard
-        temperature={weatherData.temp.F}
-        isDay={weatherData.isDay}
-        condition={weatherData.condition}
-      />
+      <WeatherCard weatherData={weatherData} />
 
       <section className="cards">
         <p className="cards__text">

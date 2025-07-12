@@ -1,11 +1,12 @@
 import "./ItemCard.css";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 function ItemCard({ item, onCardClick, onCardLike }) {
   const currentUser = useContext(CurrentUserContext);
 
-  const isLiked = (item.likes || []).some((id) => id === currentUser._id);
+  const isLiked =
+    currentUser && (item.likes || []).some((id) => id === currentUser._id);
 
   const itemLikeButtonClassName = `item__like-button ${
     isLiked ? "item__like-button_active" : ""
@@ -28,14 +29,12 @@ function ItemCard({ item, onCardClick, onCardLike }) {
         src={item.link}
         alt={item.name}
       />
-      {currentUser._id && (
+      {currentUser?._id && (
         <button
           onClick={handleLike}
           aria-label="Like"
           className={itemLikeButtonClassName}
-        >
-          <img src={likeIcon} alt="like" className="item__like-icon" />
-        </button>
+        ></button>
       )}
     </li>
   );
