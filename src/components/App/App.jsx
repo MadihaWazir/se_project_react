@@ -211,7 +211,7 @@ function App() {
         setClothingItems(normalizedData);
       })
       .catch((err) => {
-        console.error("Failed to fetch clothing items:", err);
+        console.error(err);
       });
   }, []);
 
