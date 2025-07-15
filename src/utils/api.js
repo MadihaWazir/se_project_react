@@ -4,7 +4,7 @@ function getProtectedData(token) {
   return fetch(`${baseUrl}/protected-endpoint`, {
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
 }
@@ -16,7 +16,7 @@ const handleServerResponse = (res) => {
   return Promise.reject(new Error(`Error: ${res.status}`));
 };
 
-const getItems = (id, token) => {
+const getItems = () => {
   return fetch(`${baseUrl}/items`, {
     method: "GET",
   }).then(handleServerResponse);
@@ -27,7 +27,7 @@ const addItem = (inputData = {}, token) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       name: inputData.name,
@@ -41,7 +41,8 @@ const deleteItem = (id, token) => {
   return fetch(`${baseUrl}/items/${id}`, {
     method: "DELETE",
     headers: {
-      authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   }).then(handleServerResponse);
 };
@@ -51,7 +52,7 @@ const addCardLike = (id, token) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   }).then(handleServerResponse);
 };
@@ -61,11 +62,21 @@ const removeCardLike = (id, token) => {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
     },
   }).then(handleServerResponse);
 };
 
+const updateProfile = (data, token) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  }).then(handleServerResponse);
+};
 export {
   getItems,
   addItem,
@@ -74,4 +85,5 @@ export {
   getProtectedData,
   addCardLike,
   removeCardLike,
+  updateProfile,
 };
