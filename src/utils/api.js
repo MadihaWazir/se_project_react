@@ -6,7 +6,7 @@ function getProtectedData(token) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  }).then((res) => (res.ok ? res.json() : Promise.reject(res.status)));
+  }).then(handleServerResponse);
 }
 
 const handleServerResponse = (res) => {
@@ -17,9 +17,7 @@ const handleServerResponse = (res) => {
 };
 
 const getItems = () => {
-  return fetch(`${baseUrl}/items`, {
-    method: "GET",
-  }).then(handleServerResponse);
+  return fetch(`${baseUrl}/items`).then(handleServerResponse);
 };
 
 const addItem = (inputData = {}, token) => {

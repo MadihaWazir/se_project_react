@@ -15,7 +15,7 @@ function Profile({
     <section className="profile">
       <div className="profile__container">
         <div className="profile__sidebar">
-          <SideBar handleLogout={handleLogout} />
+          <SideBar handleLogout={handleLogout} onEditProfile={onEditProfile} />
         </div>
         <div className="profile__clothes-section">
           <ClothesSection
@@ -26,20 +26,6 @@ function Profile({
           />
         </div>
       </div>
-      <button
-        className="profile__edit-button"
-        onClick={onEditProfile}
-        aria-label="Edit Profile"
-      >
-        Edit Profile
-      </button>
-      <button
-        className="profile__signout-button"
-        onClick={handleLogout}
-        aria-label="Sign Out"
-      >
-        Sign Out
-      </button>
     </section>
   );
 }

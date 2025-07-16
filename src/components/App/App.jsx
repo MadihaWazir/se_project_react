@@ -60,8 +60,13 @@ function App() {
       .then((data) => {
         if (data.token) {
           localStorage.setItem("token", data.token);
-          setIsLoggedIn(true);
-          setCurrentUser(data.user);
+          const token = data.token;
+          checkToken({ token })
+            .then((user) => {
+              setCurrentUser(user);
+              setIsLoggedIn(true);
+            })
+            .catch(() => setIsLoggedIn(false));
           navigate("/profile");
           closeActiveModal();
         }
@@ -73,7 +78,7 @@ function App() {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
     setCurrentUser(null);
-    setActiveModal("");
+    closeActiveModal();
   };
 
   const handleRegisterModal = () => {
@@ -121,7 +126,7 @@ function App() {
     if (!itemToDelete) return;
 
     const token = localStorage.getItem("token");
-    deleteItem(itemToDelete._id)
+    deleteItem(itemToDelete._id, token)
       .then(() => {
         setClothingItems((prevItems) =>
           prevItems.filter((item) => item._id !== itemToDelete._id)
@@ -140,7 +145,7 @@ function App() {
   const handleRegistration = ({ name, avatar, email, password }) => {
     signup({ name, avatar, email, password })
       .then(() => {
-        setActiveModal("");
+        closeActiveModal();
         handleLogin({ email, password });
         navigate("/profile");
       })
@@ -204,16 +209,11 @@ function App() {
   useEffect(() => {
     getItems()
       .then((data) => {
-        const normalizedData = data.map((item) => ({
-          ...item,
-          link: item.imageUrl || item.link || item.image,
-        }));
-        setClothingItems(normalizedData);
+        setClothingItems(data);
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(console.error);
   }, []);
+  console.log("App - LoggedIn value:", isLoggedIn);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -241,7 +241,7 @@ function App() {
               handleLoginModal={() => setActiveModal("login")}
               handleRegisterModal={() => setActiveModal("register")}
               handleLogout={handleLogout}
-              currentUser={currentUser}
+              currentUser={CurrentUserContext}
             />
 
             {isSidebarOpen ? <SideBar handleLogout={handleLogout} /> : null}
@@ -311,7 +311,7 @@ function App() {
             isOpen={activeModal === "edit-profile"}
             onClose={closeActiveModal}
             onEditProfile={handleEditProfileSubmit}
-            currentUser={currentUser}
+            currentUser={CurrentUserContext}
           />
           <Footer />
         </div>

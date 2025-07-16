@@ -25,14 +25,6 @@ export default function AddItemModal({
     setWeather(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onAddItemModalSubmit({ name, imageUrl, weather });
-    setName("");
-    setImageUrl("");
-    setWeather("");
-  };
-
   useEffect(() => {
     if (isOpen) {
       setName("");
@@ -40,6 +32,11 @@ export default function AddItemModal({
       setWeather("");
     }
   }, [isOpen]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onAddItemModalSubmit({ name, imageUrl, weather });
+  };
 
   return (
     <ModalWithForm

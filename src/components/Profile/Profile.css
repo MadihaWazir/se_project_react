@@ -1,9 +1,83 @@
 .profile {
   display: flex;
+  gap: 40px;
+  font-family: "Cabinet Grotesk", sans-serif;
 }
 
 .profile__sidebar {
-  width: 229px;
-  padding: 0 116px 0 0;
-  background-color: #f3f3f3;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profile__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile__avatar-placeholder {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 32px;
+  font-family: "Cabinet Grotesk", sans-serif;
+  color: #fff;
+}
+
+.profile__username {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 16px 0;
+}
+
+.profile__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile__edit-button,
+.profile__logout-button {
+  background: none;
+  border: none;
+  color: #000;
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.profile__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.profile__items-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.profile__add-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
 }
