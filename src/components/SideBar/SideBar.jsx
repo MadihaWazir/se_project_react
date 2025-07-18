@@ -4,6 +4,7 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 import avatar from "../../assets/avatar.svg";
 
 function SideBar({ handleLogout, onEditProfile }) {
+  const currentUser = useContext(CurrentUserContext);
   return (
     <div className="sidebar">
       <div className="sidebar__user-container">

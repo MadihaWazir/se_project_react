@@ -17,7 +17,9 @@ const handleServerResponse = (res) => {
 };
 
 const getItems = () => {
-  return fetch(`${baseUrl}/items`).then(handleServerResponse);
+  return fetch(`${baseUrl}/items`, {
+    method: "GET",
+  }).then(handleServerResponse);
 };
 
 const addItem = (inputData = {}, token) => {

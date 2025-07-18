@@ -181,15 +181,10 @@ function App() {
   };
 
   useEffect(() => {
-    console.log("=== WEATHER FETCH DEBUG ===");
-    console.log("Coordinates:", coordinates);
-    console.log("API Key:", APIkey);
-
     getWeather(coordinates, APIkey)
       .then((data) => {
-        console.log("Raw weather API response:", data);
         const filteredData = filterWeatherData(data);
-        console.log("Filtered weather data:", filteredData);
+
         setWeatherData(filteredData);
       })
       .catch((err) => {
@@ -208,12 +203,15 @@ function App() {
 
   useEffect(() => {
     getItems()
-      .then((data) => {
-        setClothingItems(data);
+      .then((items) => {
+        const normalized = items.map((item) => ({
+          ...item,
+          link: item.link || item.imageUrl || item.image,
+        }));
+        setClothingItems(normalized);
       })
       .catch(console.error);
   }, []);
-  console.log("App - LoggedIn value:", isLoggedIn);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -241,7 +239,6 @@ function App() {
               handleLoginModal={() => setActiveModal("login")}
               handleRegisterModal={() => setActiveModal("register")}
               handleLogout={handleLogout}
-              currentUser={CurrentUserContext}
             />
 
             {isSidebarOpen ? <SideBar handleLogout={handleLogout} /> : null}
@@ -311,7 +308,6 @@ function App() {
             isOpen={activeModal === "edit-profile"}
             onClose={closeActiveModal}
             onEditProfile={handleEditProfileSubmit}
-            currentUser={CurrentUserContext}
           />
           <Footer />
         </div>
