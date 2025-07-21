@@ -9,12 +9,12 @@ function getProtectedData(token) {
   }).then(handleServerResponse);
 }
 
-const handleServerResponse = (res) => {
-  if (res.ok) {
-    return res.json();
+function handleServerResponse(res) {
+  if (!res.ok) {
+    return Promise.reject(`Error: ${res.status}`);
   }
-  return Promise.reject(new Error(`Error: ${res.status}`));
-};
+  return res.json();
+}
 
 const getItems = () => {
   return fetch(`${baseUrl}/items`, {
