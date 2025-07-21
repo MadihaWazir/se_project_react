@@ -257,18 +257,7 @@ function App() {
                     />
                   }
                 />
-                <Route
-                  path="/items"
-                  element={
-                    <Main
-                      weatherData={weatherData}
-                      handleCardClick={handleCardClick}
-                      clothingItems={clothingItems}
-                      handleAddClick={handleAddClick}
-                      onCardLike={handleCardLike}
-                    />
-                  }
-                />
+
                 <Route
                   path="/profile"
                   element={
