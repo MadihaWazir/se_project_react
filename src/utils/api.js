@@ -1,3 +1,5 @@
+import { defaultClothingItems } from "./constants"; // ✅ Add missing import for default items
+
 const baseUrl = "http://localhost:3001";
 
 function getProtectedData(token) {
@@ -10,16 +12,24 @@ function getProtectedData(token) {
 }
 
 function handleServerResponse(res) {
-  if (!res.ok) {
-    return Promise.reject(`Error: ${res.status}`);
+  if (res.ok) {
+    return res.json();
   }
-  return res.json();
+  return Promise.reject(`Error: ${res.status}`);
 }
 
 const getItems = () => {
   return fetch(`${baseUrl}/items`, {
     method: "GET",
-  }).then(handleServerResponse);
+    headers: {
+      "Content-Type": "application/json", // ✅ Add this header
+    },
+  })
+    .then(handleServerResponse)
+    .catch((err) => {
+      console.error("getItems failed:", err);
+      return defaultClothingItems; // ✅ Return empty array on error instead of throwing
+    });
 };
 
 const addItem = (inputData = {}, token) => {

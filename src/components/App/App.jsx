@@ -56,24 +56,30 @@ function App() {
     }
   };
 
-  const handleLogin = useCallback(({ email, password }) => {
-    signin({ email, password })
-      .then((data) => {
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          const token = data.token;
-          checkToken({ token })
-            .then((user) => {
-              setCurrentUser(user);
-              setIsLoggedIn(true);
-            })
-            .catch(() => setIsLoggedIn(false));
+  const handleLogin = useCallback(
+    ({ email, password }) => {
+      signin({ email, password })
+        .then((data) => {
+          if (data.token) {
+            localStorage.setItem("token", data.token);
+            return checkToken(data.token); // ✅ Check token after storing
+          }
+          throw new Error("No token received");
+        })
+        .then((user) => {
+          setCurrentUser(user); // ✅ Set user data
+          setIsLoggedIn(true);
+          closeActiveModal(); // ✅ Use closeActiveModal instead of setActiveModal("")
           navigate("/profile");
-          closeActiveModal();
-        }
-      })
-      .catch(console.error);
-  }, []);
+        })
+        .catch((err) => {
+          console.error("Login failed:", err);
+          setIsLoggedIn(false);
+          setCurrentUser(null);
+        });
+    },
+    [navigate]
+  );
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -113,15 +119,18 @@ function App() {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    const token = localStorage.getItem("token");
-    addItem({ name, imageUrl, weather }, token)
-      .then((addedCard) => {
-        setClothingItems([addedCard, ...clothingItems]);
-        closeActiveModal();
-      })
-      .catch(console.error);
-  };
+  const handleAddItemModalSubmit = useCallback(
+    ({ name, imageUrl, weather }) => {
+      const token = localStorage.getItem("token");
+      addItem({ name, imageUrl, weather }, token)
+        .then((addedCard) => {
+          setClothingItems([addedCard, ...clothingItems]);
+          closeActiveModal();
+        })
+        .catch(console.error);
+    },
+    [clothingItems]
+  );
 
   const handleConfirmDelete = () => {
     if (!itemToDelete) return;
@@ -140,17 +149,19 @@ function App() {
           `Failed to delete item with ID ${itemToDelete._id}:`,
           err
         );
+        closeActiveModal();
       });
   };
 
   const handleRegistration = ({ name, avatar, email, password }) => {
     signup({ name, avatar, email, password })
       .then(() => {
-        closeActiveModal();
-        handleLogin({ email, password });
-        navigate("/profile");
+        closeActiveModal(); // Close modal first
+        return handleLogin({ email, password }); // Login will handle navigation
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error("Registration failed:", err);
+      });
   };
 
   const handleEditProfileModal = () => {
@@ -160,7 +171,7 @@ function App() {
 
   const handleEditProfileSubmit = ({ name, avatar }) => {
     const token = localStorage.getItem("token");
-    updateProfile({ name, avatar, token })
+    updateProfile({ name, avatar }, token)
       .then((updatedUser) => {
         setCurrentUser(updatedUser);
         closeActiveModal();
@@ -168,8 +179,12 @@ function App() {
       .catch(console.error);
   };
 
-  const handleCardLike = ({ id, isLiked }) => {
+  const handleCardLike = useCallback(({ id, isLiked }) => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found, cannot like card");
+      return;
+    }
     (!isLiked ? addCardLike(id, token) : removeCardLike(id, token))
       .then((updatedCard) => {
         setClothingItems((prevItems) =>
@@ -178,8 +193,10 @@ function App() {
           )
         );
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => {
+        console.log("Failed to update like:", err);
+      });
+  }, []);
 
   useEffect(() => {
     getWeather(coordinates, APIkey)
@@ -205,24 +222,34 @@ function App() {
   useEffect(() => {
     getItems()
       .then((items) => {
-        const normalized = items.map((item) => ({
-          ...item,
-          link: item.link || item.imageUrl || item.image,
-        }));
-        setClothingItems(normalized);
+        if (items && Array.isArray(items) && items.length > 0) {
+          const normalized = items.map((item) => ({
+            ...item,
+            link: item.link || item.imageUrl || item.image,
+          }));
+          setClothingItems(normalized);
+        } else {
+          setClothingItems(defaultClothingItems);
+        }
       })
-      .catch(console.error);
+      .catch((err) => {
+        setClothingItems(defaultClothingItems);
+      });
   }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      checkToken({ token })
+      checkToken(token)
         .then((user) => {
           setCurrentUser(user);
           setIsLoggedIn(true);
         })
-        .catch(() => setIsLoggedIn(false));
+        .catch((err) => {
+          localStorage.removeItem("token");
+          setCurrentUser(null);
+          setIsLoggedIn(false);
+        });
     }
   }, []);
 
@@ -242,7 +269,12 @@ function App() {
               handleLogout={handleLogout}
             />
 
-            {isSidebarOpen ? <SideBar handleLogout={handleLogout} /> : null}
+            {isSidebarOpen && (
+              <SideBar
+                handleLogout={handleLogout}
+                onEditProfile={handleEditProfileModal}
+              />
+            )}
 
             <div className="page__main">
               <Routes>
