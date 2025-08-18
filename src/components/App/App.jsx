@@ -221,21 +221,11 @@ function App() {
 
   useEffect(() => {
     getItems()
-      .then((items) => {
-        if (items && Array.isArray(items) && items.length > 0) {
-          const normalized = items.map((item) => ({
-            ...item,
-            link: item.link || item.imageUrl || item.image,
-          }));
-          setClothingItems(normalized);
-        } else {
-          setClothingItems(defaultClothingItems);
-        }
+      .then((data) => {
+        setClothingItems(data);
       })
-      .catch((err) => {
-        setClothingItems(defaultClothingItems);
-      });
-  }, []);
+      .catch((err) => console.log(err));
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");

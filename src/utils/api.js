@@ -18,19 +18,14 @@ function handleServerResponse(res) {
   return Promise.reject(`Error: ${res.status}`);
 }
 
-const getItems = () => {
+function getItems(token) {
   return fetch(`${baseUrl}/items`, {
-    method: "GET",
     headers: {
-      "Content-Type": "application/json", // ✅ Add this header
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
     },
-  })
-    .then(handleServerResponse)
-    .catch((err) => {
-      console.error("getItems failed:", err);
-      return defaultClothingItems; // ✅ Return empty array on error instead of throwing
-    });
-};
+  }).then(handleServerResponse);
+}
 
 const addItem = (inputData = {}, token) => {
   return fetch(`${baseUrl}/items`, {
