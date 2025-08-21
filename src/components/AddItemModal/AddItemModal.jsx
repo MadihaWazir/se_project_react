@@ -25,6 +25,11 @@ export default function AddItemModal({
     setWeather(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onAddItemModalSubmit({ name, imageUrl, weather });
+  };
+
   useEffect(() => {
     if (isOpen) {
       setName("");
@@ -32,11 +37,6 @@ export default function AddItemModal({
       setWeather("");
     }
   }, [isOpen]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onAddItemModalSubmit({ name, imageUrl, weather });
-  };
 
   return (
     <ModalWithForm
@@ -61,6 +61,7 @@ export default function AddItemModal({
           required
         />
       </label>
+
       <label htmlFor="imageUrl" className="modal__label">
         Image{" "}
         <input
@@ -73,6 +74,7 @@ export default function AddItemModal({
           required
         />
       </label>
+
       <fieldset className="modal__radio-buttons">
         <legend className="modal__legend">Select the weather type:</legend>
         <div className="modal__radio-button">
@@ -89,6 +91,7 @@ export default function AddItemModal({
             Hot
           </label>
         </div>
+
         <div className="modal__radio-button">
           <input
             id="warm"

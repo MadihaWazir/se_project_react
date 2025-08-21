@@ -1,4 +1,4 @@
-import { handleServerResponse } from "./api";
+import { handleServerResponse } from "./api.js";
 
 const baseUrl = "http://localhost:3001";
 

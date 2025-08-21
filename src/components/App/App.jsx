@@ -129,7 +129,7 @@ function App() {
         })
         .catch(console.error);
     },
-    [clothingItems]
+    [clothingItems, closeActiveModal]
   );
 
   const handleConfirmDelete = () => {

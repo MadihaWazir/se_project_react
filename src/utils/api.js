@@ -1,5 +1,3 @@
-import { defaultClothingItems } from "./constants"; // ✅ Add missing import for default items
-
 const baseUrl = "http://localhost:3001";
 
 function getProtectedData(token) {
@@ -12,20 +10,20 @@ function getProtectedData(token) {
 }
 
 function handleServerResponse(res) {
-  if (res.ok) {
-    return res.json();
+  if (!res.ok) {
+    return Promise.reject(`Error: ${res.status}`);
   }
-  return Promise.reject(`Error: ${res.status}`);
+  return res.json();
 }
 
-function getItems(token) {
+const getItems = () => {
   return fetch(`${baseUrl}/items`, {
+    method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   }).then(handleServerResponse);
-}
+};
 
 const addItem = (inputData = {}, token) => {
   return fetch(`${baseUrl}/items`, {
