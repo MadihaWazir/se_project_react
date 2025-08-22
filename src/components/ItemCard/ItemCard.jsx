@@ -26,7 +26,7 @@ function ItemCard({ item, onCardClick, onCardLike }) {
       <img
         onClick={handleCardClick}
         className="card__image"
-        src={item.imageUrl}
+        src={item.link}
         alt={item.name}
       />
       {currentUser?._id && (
