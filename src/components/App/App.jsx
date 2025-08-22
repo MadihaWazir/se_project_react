@@ -156,12 +156,11 @@ function App() {
   const handleRegistration = ({ name, avatar, email, password }) => {
     signup({ name, avatar, email, password })
       .then(() => {
-        closeActiveModal(); // Close modal first
-        return handleLogin({ email, password }); // Login will handle navigation
+        setActiveModal(""); // Close modal first
+        handleLogin({ email: email, password: password });
+        navigate("/profile"); // Login will handle navigation
       })
-      .catch((err) => {
-        console.error("Registration failed:", err);
-      });
+      .catch(console.error);
   };
 
   const handleEditProfileModal = () => {
@@ -257,6 +256,7 @@ function App() {
               handleLoginModal={() => setActiveModal("login")}
               handleRegisterModal={() => setActiveModal("register")}
               handleLogout={handleLogout}
+              onProfileClick={() => navigate("/profile")} // ✅ Add profile navigation
             />
 
             {isSidebarOpen && (

@@ -15,11 +15,7 @@ export default function RegisterModal({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onRegister({ email, name, password, avatar });
-    setEmail("");
-    setName("");
-    setPassword("");
-    setAvatar("");
+    onRegister({ name, avatar, email, password });
   };
 
   return (
@@ -29,7 +25,7 @@ export default function RegisterModal({
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      isSubmitDisabled={!email || !password || !name}
+      disabled={!email || !password || !name}
       contentClassName="modal__content modal__content--signup"
       actions={
         <button
