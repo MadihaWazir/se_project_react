@@ -9,14 +9,12 @@ export const signup = ({ name, avatar, email, password }) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      name: name,
-      avatar: avatar,
-      email: email,
-      password: password,
+      name,
+      avatar,
+      email,
+      password,
     }),
-  }).then((res) => {
-    return handleServerResponse(res);
-  });
+  }).then(handleServerResponse);
 };
 
 export const signin = ({ email, password }) => {
@@ -26,9 +24,7 @@ export const signin = ({ email, password }) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
-  }).then((res) => {
-    return handleServerResponse(res);
-  });
+  }).then(handleServerResponse);
 };
 
 export const checkToken = (token) => {
@@ -41,7 +37,7 @@ export const checkToken = (token) => {
   }).then(handleServerResponse);
 };
 
-export const updateProfile = ({ name, avatar }, token) => {
+export const updateProfile = ({ name, avatar, token }) => {
   return fetch(`${baseUrl}/users/me`, {
     method: "PATCH",
     headers: {
@@ -49,7 +45,5 @@ export const updateProfile = ({ name, avatar }, token) => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ name, avatar }),
-  }).then((res) => {
-    return handleServerResponse(res);
-  });
+  }).then(handleServerResponse);
 };
