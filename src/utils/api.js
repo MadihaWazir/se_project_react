@@ -25,20 +25,16 @@ const getItems = () => {
   }).then(handleServerResponse);
 };
 
-const addItem = (inputData = {}, token) => {
+function addItem(item, token) {
   return fetch(`${baseUrl}/items`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({
-      name: inputData.name,
-      imageUrl: inputData.imageUrl,
-      weather: inputData.weather,
-    }),
+    body: JSON.stringify(item),
   }).then(handleServerResponse);
-};
+}
 
 const deleteItem = (id, token) => {
   return fetch(`${baseUrl}/items/${id}`, {

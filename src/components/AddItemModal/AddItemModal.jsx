@@ -31,11 +31,9 @@ export default function AddItemModal({
   };
 
   useEffect(() => {
-    if (isOpen) {
-      setName("");
-      setImageUrl("");
-      setWeather("");
-    }
+    setName("");
+    setImageUrl("");
+    setWeather("");
   }, [isOpen]);
 
   return (

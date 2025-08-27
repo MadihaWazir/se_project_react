@@ -114,15 +114,12 @@ function App() {
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
     const token = localStorage.getItem("jwt");
-    addItem({ name, imageUrl, weather }, token)
+    addItem({ name, imageUrl: imageUrl, weather: weather }, token)
       .then((addedItem) => {
-        setClothingItems((prevItems) => [
-          { ...addedItem, link: addedItem.imageUrl },
-          ...prevItems,
-        ]);
+        setClothingItems([addedItem, ...clothingItems]);
         onClose();
       })
-      .catch((err) => console.error(err));
+      .catch(console.error);
   };
 
   const handleDeleteClick = (cardId) => {
