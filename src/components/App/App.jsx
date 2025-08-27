@@ -230,7 +230,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      checkToken({ token })
+      checkToken(token)
         .then((user) => {
           setCurrentUser(user);
           setIsLoggedIn(true);
