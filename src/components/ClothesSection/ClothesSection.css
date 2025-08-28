@@ -8,9 +8,9 @@
 
 .clothes-section__container {
   display: flex;
+  gap: 20px;
   margin-bottom: 20px;
   padding-top: 16px;
-  gap: 20px;
 }
 
 .clothes-section__title {
@@ -22,7 +22,6 @@
 }
 
 .clothes-section__button {
-  padding: 0;
   font-family: Cabinet Grotesk;
   font-weight: 700;
   font-size: 20px;
@@ -31,4 +30,5 @@
   border-style: none;
   color: rgba(0, 0, 0, 0.6);
   cursor: pointer;
+  padding: 0;
 }

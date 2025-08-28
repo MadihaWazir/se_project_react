@@ -1,4 +1,6 @@
 .weather-card {
+  font-family: "Cabinet Grotesk", sans-serif;
+  font-weight: 700;
   position: relative;
   display: flex;
   height: 80px;
@@ -13,6 +15,7 @@
   position: absolute;
   top: 20px;
   left: 16px;
+  color: #fff;
 }
 
 .weather-card__image {
