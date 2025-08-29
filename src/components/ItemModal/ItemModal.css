@@ -17,15 +17,14 @@
   border-radius: 20px 20px 0 0;
 }
 
-.modal__content {
-  background-color: rgba(255, 255, 255, 1);
-  position: relative;
-  height: 436px;
-  border-radius: 20px;
-  padding: 28px 28px 36px;
-  max-width: 496px;
-  box-sizing: border-box;
-  width: 100%;
+.modal__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(211, 211, 211, 0.6);
+  z-index: 1;
 }
 
 .modal__opened {
@@ -48,6 +47,14 @@
   margin: 0;
   height: 610px;
   padding: 0;
+  position: relative;
+
+  border-radius: 20px;
+
+  max-width: 496px;
+  box-sizing: border-box;
+  width: 100%;
+  z-index: 2;
 }
 
 .modal__footer {

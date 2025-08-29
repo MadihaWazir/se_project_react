@@ -167,30 +167,28 @@ function App() {
       .catch(console.error);
   };
 
-  const handleCardLike =
-    (({ id, isLiked }) => {
-      const token = localStorage.getItem("jwt");
-      (!isLiked ? addCardLike(id, token) : removeCardLike(id, token))
-        .then((updatedCard) => {
-          setClothingItems((cards) =>
-            cards.map((item) =>
-              item._id === id
-                ? {
-                    ...updatedCard,
-                    link:
-                      updatedCard.link ||
-                      updatedCard.imageUrl ||
-                      updatedCard.image,
-                  }
-                : item
-            )
-          );
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    },
-    []);
+  const handleCardLike = useCallback(({ id, isLiked }) => {
+    const token = localStorage.getItem("jwt");
+    (!isLiked ? addCardLike(id, token) : removeCardLike(id, token))
+      .then((updatedCard) => {
+        setClothingItems((cards) =>
+          cards.map((item) =>
+            item._id === id
+              ? {
+                  ...updatedCard,
+                  link:
+                    updatedCard.link ||
+                    updatedCard.imageUrl ||
+                    updatedCard.image,
+                }
+              : item
+          )
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   useEffect(() => {
     getWeather(coordinates, APIkey)

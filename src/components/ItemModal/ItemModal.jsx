@@ -6,11 +6,14 @@ import CurrentUserContext from "../../contexts/CurrentUserContext";
 function ItemModal({ isOpen, onClose, card, onDelete }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner === currentUser?._id;
+  const handleDelete = () => {
+    onDelete(card._id);
+  };
 
   return (
     <div className={`modal ${isOpen === "preview" ? "modal_opened" : ""}`}>
       <div className="modal__overlay"></div>
-      <div className="modal__content modal__content_type_image">
+      <div className="modal__content_type_image">
         <button onClick={onClose} type="button" className="modal__close">
           <img src={close} alt="close" />
         </button>
@@ -21,7 +24,11 @@ function ItemModal({ isOpen, onClose, card, onDelete }) {
             <p className="modal__weather">Weather: {card?.weather}</p>
           </div>
           {isOwn && (
-            <button className="modal__delete" type="button" onClick={onDelete}>
+            <button
+              className="modal__delete"
+              type="button"
+              onClick={handleDelete}
+            >
               Delete item
             </button>
           )}
