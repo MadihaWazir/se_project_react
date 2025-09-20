@@ -12,7 +12,7 @@
 
 .modal__image {
   width: 100%;
-  height: auto;
+  height: 498px;
   object-fit: cover;
   border-radius: 20px 20px 0 0;
 }

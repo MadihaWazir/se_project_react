@@ -76,6 +76,11 @@ export const coordinates = {
   longitude: -76.667038,
 };
 
+export const baseUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://api.wtwr.cbu.net"
+    : "http://localhost:3001";
+
 export const APIkey = "e994232a1d053950c3bc8bdab130fb86";
 
 export const defaultClothingItems = [

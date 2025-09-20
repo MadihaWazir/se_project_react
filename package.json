@@ -3,11 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://wtwr.cbu.net",
   "scripts": {
     "dev": "vite --open",
     "build": "vite build",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build &&  scp -r ./dist/* ahmardiha93@wtwr.cbu.net:/home/ahmardiha93/frontend"
   },
   "dependencies": {
     "react": "^18.3.1",
